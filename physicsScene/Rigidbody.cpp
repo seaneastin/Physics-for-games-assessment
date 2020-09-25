@@ -17,7 +17,7 @@ Rigidbody::~Rigidbody()
 }
 
 /**
- * update for rigidbody that also applys gravity
+ * update for rigidbody
  */
 void Rigidbody::fixedUpdate(glm::vec2 gravity, float timeStep)
 {
