@@ -16,12 +16,18 @@ PhysicsScene::~PhysicsScene()
 		delete pActor;
 	}
 }
-
+/**
+ * adds an actor to the scene
+ */
 void PhysicsScene::addActor(PhysicsObject* actor)
 {
 	m_actors.push_back(actor);
 }
 
+
+/**
+ * removes an actor from the scene
+ */
 void PhysicsScene::removeActor(PhysicsObject* actor)
 {
 	for (auto i = m_actors.begin(); i != m_actors.end(); i++)
@@ -34,7 +40,9 @@ void PhysicsScene::removeActor(PhysicsObject* actor)
 }
 
 
-
+/**
+ * updates physics at a fixed time step
+ */
 void PhysicsScene::update(float dt)
 {
 
@@ -61,6 +69,9 @@ void PhysicsScene::update(float dt)
 
 }
 
+/**
+ * draws the actors added to the scene
+ */
 void PhysicsScene::updateGizmos()
 {
 	for (auto pActor : m_actors) {

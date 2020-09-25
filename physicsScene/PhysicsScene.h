@@ -2,6 +2,8 @@
 #include "glm\ext.hpp"
 #include "physicsObject.h"
 #include <vector>
+
+
 class PhysicsScene
 {
 public:
@@ -29,6 +31,9 @@ public:
 protected:
 	glm::vec2 m_gravity;
 	float m_timestep;
+	/**
+ * a list of actors in the scene
+ */
 	std::vector<PhysicsObject*> m_actors;
 
 

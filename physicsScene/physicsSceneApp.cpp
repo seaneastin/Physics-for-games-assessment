@@ -29,7 +29,7 @@ bool physicsSceneApp::startup() {
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 
-	glm::vec2 gravity = glm::vec2(0, -80);
+	glm::vec2 gravity = glm::vec2(0, 0);
 
 	m_physicsScene = new PhysicsScene();
 	m_physicsScene->setGravity(gravity);
@@ -41,7 +41,7 @@ bool physicsSceneApp::startup() {
 	Sphere* ball = new Sphere(glm::vec2(-10.0f, 1.0f), glm::vec2(5000.0f, 0.0f), 1.0f, 2.0f, glm::vec4(128, 0, 128, 1));
 	
 	//setupContinuousDemo(initialposition, initialvelocity, gravity.y);
-	/*m_physicsScene->addActor(ball);*/
+	m_physicsScene->addActor(ball);
 	createSpheresintriangle(100, glm::vec2(0.0f, 1.0f), 1.0f, 2.0f);
 
 	Plane* floor = new Plane(glm::vec2(0.0f, 60.0f), -50.0f);
@@ -123,22 +123,25 @@ void physicsSceneApp::setupContinuousDemo(glm::vec2 startPos, glm::vec2 velocity
 		time += timeStep;
 	}
 }
-
+/**
+ * allows you to make spheres spawn in a rack
+ */
 void physicsSceneApp::createSpheresintriangle(int spherestocreate,glm::vec2 positionm, float mass, float radius)
 {	
-	glm::vec2 startingpostion = positionm;
-	int howmanyinarow = 1;
-	int sphereinarow = 1;
+	glm::vec2 firstSphereInRow = positionm; //keeps track of first sphere in the row
+	int howmanyinarow = 1; //keeps track how many in a row
+	int sphereinarow = 1; //keeps track of spheres made already
 	for (int i = 0; i < spherestocreate; i++)
 	{
+
 			Sphere* sphere = new Sphere(positionm, glm::vec2(0.0f, 0.0f), mass, radius, glm::vec4(1.0f, 1.0f, 1.0f,1.0f));
 			m_physicsScene->addActor(sphere);
-
+			//keeps track of 1st sphere in the row
 			if (sphereinarow == 1)
 			{
-				startingpostion = glm::vec2(positionm.x, positionm.y);
+				firstSphereInRow = glm::vec2(positionm.x, positionm.y);
 			}
-
+			//if the number of spheres being created is greater than 1 it will offset the position of the next sphere
 			if (howmanyinarow > 1)
 			{
 				positionm = glm::vec2(positionm.x, positionm.y - 4.0f);
@@ -146,11 +149,11 @@ void physicsSceneApp::createSpheresintriangle(int spherestocreate,glm::vec2 posi
 
 		
 
-
+			//if the row being created is done then it will set up another row3
 			if (sphereinarow >= howmanyinarow)
 			{
-				
-				positionm = glm::vec2(positionm.x + 5, startingpostion.y + 2);
+
+				positionm = glm::vec2(positionm.x + 5, firstSphereInRow.y + 2);
 				howmanyinarow++;
 				sphereinarow = 1;
 			}

@@ -16,6 +16,9 @@ Plane::Plane(glm::vec2 normal, float distance)
 	m_distanceToOrigin = distance;
 }
 
+/**
+ * draws the plane
+ */
 void Plane::makeGizmo()
 {
 	float lineSegmentLength = 300;
@@ -27,6 +30,9 @@ void Plane::makeGizmo()
 	aie::Gizmos::add2DLine(start, end, color);
 }
 
+/**
+ * resolves plane to sphere collsion
+ */
 void Plane::resolveCollision(Rigidbody* actor2, glm::vec2 contact)
 {
 	glm::vec2 normal =  m_normal;

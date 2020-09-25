@@ -6,7 +6,9 @@ enum ShapeType {
 	SPHERE,
 	SHAPE_COUNT
 };
-
+/**
+ * a pure virutal class
+ */
 class PhysicsObject
 {
 protected:

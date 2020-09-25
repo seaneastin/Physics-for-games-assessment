@@ -1,5 +1,7 @@
 #include "Rigidbody.h"
 
+
+
 Rigidbody::Rigidbody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, float rotation, float mass)
 	: PhysicsObject(shapeID)
 {
@@ -14,18 +16,21 @@ Rigidbody::~Rigidbody()
 
 }
 
+/**
+ * update for rigidbody that also applys gravity
+ */
 void Rigidbody::fixedUpdate(glm::vec2 gravity, float timeStep)
 {
 
 
 	applyForce(gravity * m_mass * timeStep, m_position);
 
-	if (glm::length(m_velocity) < 0.1f)
+	if (glm::length(m_velocity) < .5f)
 	{
 		m_velocity = glm::vec2(0.0f, 0.0f);
 	}
 
-	if (glm::abs(m_angularVelocity) < 0.1f)
+	if (glm::abs(m_angularVelocity) < .5f)
 	{
 		m_angularVelocity = 0;
 	}
@@ -45,18 +50,19 @@ void Rigidbody::debug()
 {
 }
 
+/**
+ * applys force to a rigidbody
+ */
 void Rigidbody::applyForce(glm::vec2 force, glm::vec2 pos)
 {
 	m_velocity += force / m_mass;
 	m_angularVelocity += (force.y * pos.x - force.x * pos.y) / (m_moment);
 }
 
-void Rigidbody::applyForceToActor(Rigidbody* otherActor, glm::vec2 force)
-{
-	otherActor->applyForce(force, otherActor->m_position);
-	applyForce(-force, m_position);
-}
 
+/**
+ * resolves collsion for rigidbodys
+ */
 void Rigidbody::resolveCollision(Rigidbody* actor2, glm::vec2 contact, glm::vec2* collisionNormal)
 {
 	glm::vec2 normal = glm::normalize(actor2->getPosition() - m_position);
